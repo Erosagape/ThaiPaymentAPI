@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "TestCallBack";
+}
+<h2>TestCallBack</h2>
+<input type="button" id="btnTest" value="Call API" onclick="TestCallBack()" />
+<script type="text/javascript">
+    function TestCallBack() {
+        var obj = {
+            merchant_id: "990300000133",
+            timestamp: "2023-01-01T12:30:15+08:30",
+            event: "payment_status_change",
+            detail: {
+                response_code: "0",
+                response_message: "Failed",
+                merchant_id: "990300000133",
+                order_id: "202301010002",
+                payment_reference_id: "200806022341546",
+                receive_amount: "10.48",
+                payment_type: "Credit Card",
+                payment_acquirer_bank: "CITI",
+                transaction_date: "20230102",
+                transaction_time: "183058",
+                order_description: "TEST"
+            }
+        };
+        var jsonText = JSON.stringify(obj);
+        var path = '@Url.Content("~")';
+        alert(path);
+        $.ajax({
+            url: path +"api/test",
+            type: "POST",
+            contentType: "application/json",
+            data: jsonText,
+            success: function () {
+                alert('Post Success');
+            },
+            error: function (e) {
+                alert(e);
+            }
+        });
+    }
+</script>
