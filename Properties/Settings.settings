@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ThaiPaymentAPI.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="INETMerchantKeyUAT" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">wQhgUQAEzQyJt1feCWmScuDYoa6xHI2iGRcOnYqB</Value>
+    </Setting>
+    <Setting Name="INETMerchantKeyPRD" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">P7CxC6SRvoc3krJ54ATUUzC3W0Gwvw8ICNCuucAm</Value>
+    </Setting>
+    <Setting Name="INETUrlOrderPlaceUAT" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://test.thaidotcompayment.co.th/INETServiceWeb/api/v1/accesstoken</Value>
+    </Setting>
+    <Setting Name="INETCallbackUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://www.aih-consultant.com/backend/api/payment</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

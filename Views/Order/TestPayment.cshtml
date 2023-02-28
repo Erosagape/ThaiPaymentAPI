@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "TestPayment";
+    var mdl = (ThaiPaymentAPI.Models.INETOrderResponse)Model;
+}
+<form id="__PostForm" name="__PostForm"
+      action="@mdl.link" method="POST">
+    <input type="hidden" name="access_token"
+           value="@mdl.token" />
+</form>
+<script language="javascript">
+    var v__PostForm = document.__PostForm;
+    v__PostForm.submit();
+</script>
+

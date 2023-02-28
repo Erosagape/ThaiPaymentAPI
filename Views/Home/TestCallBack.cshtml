@@ -28,12 +28,12 @@
         var path = '@Url.Content("~")';
         alert(path);
         $.ajax({
-            url: path +"api/test",
+            url: path +"api/payment",
             type: "POST",
             contentType: "application/json",
             data: jsonText,
-            success: function () {
-                alert('Post Success');
+            success: function (r) {
+                alert(r);
             },
             error: function (e) {
                 alert(e);

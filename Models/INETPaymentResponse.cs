@@ -15,8 +15,10 @@ namespace ThaiPaymentAPI.Models
         public string merchant_id { get; set; }
         public string timestamp { get; set; }
         public INETPaymentResponseDetail detail { get; set; }
-        public bool Save()
+        public ErrorResponse Save()
         {
+            var err = new ErrorResponse();
+            string paramText = "";
             try
             {
                 using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString))
@@ -94,6 +96,25 @@ END CATCH
                         @transaction_time = this.detail.transaction_time,
                         @order_description = this.detail.order_description
                     });
+                    paramText = "{";
+                    paramText += @"""timestamp"":"""+ this.timestamp + @""",";
+                    paramText += @"""merchant_id"":""" + this.merchant_id + @""",";
+                    paramText += @"""event"":""" + this.event_text + @""",";
+                    paramText += @"""detail"":{";
+                    paramText += @"""response_code"":""" + this.detail.response_code + @""",";
+                    paramText += @"""response_message"":""" + this.detail.response_message + @""",";
+                    paramText += @"""merchant_id"":""" + this.detail.merchant_id + @""",";
+                    paramText += @"""order_id"":""" + this.detail.order_id + @""",";
+                    paramText += @"""payment_reference_id"":""" + this.detail.payment_reference_id + @""",";
+                    paramText += @"""receive_amount"":""" + this.detail.receive_amount + @""",";
+                    paramText += @"""payment_type"":""" + this.detail.payment_type + @""",";
+                    paramText += @"""payment_acquirer_bank"":""" + this.detail.payment_acquirer_bank + @""",";
+                    paramText += @"""transaction_date"":""" + this.detail.transaction_date + @""",";
+                    paramText += @"""transaction_time"":""" + this.detail.transaction_time + @""",";
+                    paramText += @"""order_description"":""" + this.detail.order_description + @"""";
+                    paramText += @"}";
+                    paramText += "}";
+                    var o=JsonConvert.DeserializeObject<INETPaymentResponse>(paramText);
                     if (dtl.merchant_id !="")
                     {
                         var hdr = cn.QueryFirstOrDefault<INETPaymentResponse>("SELECT * FROM [dbo].[INET_Payment_Response] WHERE [timestamp]=@timestamp", new
@@ -102,16 +123,25 @@ END CATCH
                         });
                         if (hdr.timestamp == this.timestamp)
                         {
-                            return true;
+                            err.error = "OK";
+                            err.data = JsonConvert.SerializeObject(o);
+                            return err;
                         }
-                        return false;
+                        err.error = @"Timestamp not equal (" + this.timestamp + " / " + hdr.timestamp + @")";
+                        err.data = JsonConvert.SerializeObject(o);
+                        return err;
                     }
-                    return false;
+                    err.error = "Merchant ID is null";
+                    err.data = JsonConvert.SerializeObject(o);
+                    return err;
                 }
-            }catch(Exception e)
+            }
+            catch(Exception e)
             {
-                Console.WriteLine(e.Message);
-                return false;
+                var o = JsonConvert.DeserializeObject<INETPaymentResponse>(paramText);
+                err.error = e.StackTrace;
+                err.data = JsonConvert.SerializeObject(o);
+                return err;
             }
         }
     }

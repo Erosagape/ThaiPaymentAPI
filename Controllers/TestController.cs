@@ -47,8 +47,8 @@ namespace ThaiPaymentAPI.Controllers
         // POST api/<controller>
         public void Post([FromBody] INETPaymentResponse value)
         {
-            if(value.Save()==true)
-                _default = value;
+            value.Save();                
+            _default = value;
         }
 
         // PUT api/<controller>/5

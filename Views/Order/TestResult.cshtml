@@ -1,0 +1,19 @@
+﻿@{
+    var res = (ThaiPaymentAPI.Models.INETOrderResponse)Model;
+    ViewBag.Title = "TestResult";
+}
+
+<h2>Test Result</h2>
+Status : @res.status
+<br />
+Message : @res.message
+<br />
+token : @res.token
+<br />
+link : @res.link
+<br />
+Ref1 : @res.ref1
+<br />
+Ref2 : @res.ref2
+<br />
+

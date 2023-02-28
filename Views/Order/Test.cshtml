@@ -1,0 +1,88 @@
+﻿@using ThaiPaymentAPI.Models
+@{
+    ViewBag.Title = "Test";
+}
+<h2>Test</h2>
+<form method="POST" action="">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Order ID</label>
+            </div>
+            <div class="col-sm-6">
+                <input class="form-control" type="text" name="orderId" value="@DateTime.Now.ToString("yyyyMMddHHMMss")" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Description</label>
+            </div>
+            <div class="col-sm-6">
+                <input class="form-control"  type="text" name="orderDesc" value="Your Order" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Your Payment Amount</label>
+            </div>
+            <div class="col-sm-6">
+                <input class="form-control"  type="number" name="amount" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Your Language</label>
+            </div>
+            <div class="col-sm-6">
+                <select class="form-control dropdown"  name="lang">
+                    @{
+                        foreach (var elm in INETConstants.Language)
+                        {
+                            switch (elm)
+                            {
+                                case "E":
+                                    <option value="E">English</option>
+                                    break;
+                                case "T":
+                                    <option value="T">Thai</option>
+                                    break;
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Your Currency</label>
+            </div>
+            <div class="col-sm-6">
+                <select name="currCode" class="form-control dropdown" >
+                    @{
+                        foreach (var elm in INETConstants.Currency)
+                        {
+                            <option value="@elm.Value">@elm.Key</option>
+                        }
+                        }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Your Payment Type</label>
+            </div>
+            <div class="col-sm-6">
+                <select name="payType" class="form-control dropdown" >
+                    @{
+                            foreach (var elm in INETConstants.PaymentType)
+                            {
+                            <option value="@elm.Key">@elm.Value</option>
+                            }
+                        }
+                </select>
+            </div>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-success" value="Place Order" />
+</form>
+
