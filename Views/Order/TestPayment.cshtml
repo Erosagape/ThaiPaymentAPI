@@ -3,7 +3,7 @@
     ViewBag.Title = "TestPayment";
     var mdl = (ThaiPaymentAPI.Models.INETOrderResponse)Model;
 }
-<form id="__PostForm" name="__PostForm"
+<form id="__PostForm" name="__PostForm" enctype="multipart/form-data"
       action="@mdl.link" method="POST">
     <input type="hidden" name="access_token"
            value="@mdl.token" />

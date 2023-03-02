@@ -6,6 +6,7 @@
 <input type="button" id="btnTest" value="Call API" onclick="TestCallBack()" />
 <script type="text/javascript">
     function TestCallBack() {
+        /*
         var obj = {
             merchant_id: "990300000133",
             timestamp: "2023-01-01T12:30:15+08:30",
@@ -23,6 +24,20 @@
                 transaction_time: "183058",
                 order_description: "TEST"
             }
+        };
+        */
+        var obj = {
+            orderId: "202006101032",
+            merchantId: "990300000133",
+            bankNo: "KTC",
+            payType: "CR",
+            rcode: "0",
+            rmsg: "Success",
+            orderIDRef: "P200060100266055",
+            TxnAmount: 10.00,
+            txnDate: "20220610",
+            txnTime: "135900",
+            ORDER_DESC: "TestTest"
         };
         var jsonText = JSON.stringify(obj);
         var path = '@Url.Content("~")';
