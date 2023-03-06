@@ -7,6 +7,7 @@ namespace ThaiPaymentAPI.Models
 {
     public class ErrorResponse
     {
+        public bool success { get; set; }
         public string error { get; set; }
         public string data { get; set; }
     }

@@ -92,5 +92,40 @@ namespace ThaiPaymentAPI.Controllers
                 return View("TestResult", obj);
             }            
         }
+        public ActionResult TestPostBack()
+        {
+            return View();
+        }
+        public ActionResult Confirmation()
+        {
+            var obj = new INETOrderPayment();
+            ViewData["Result"] = new ErrorResponse()
+            {
+                data = "Ready",
+                error = "0"
+            };
+            return View(obj);
+        }
+        [HttpPost]
+        [ActionName("Confirmation")]
+        public ActionResult PostConfirmation()
+        {
+            var obj = new INETOrderPayment()
+            {
+                orderId = Request.Form["orderId"],
+                merchantId = Request.Form["merchantId"],
+                bankNo = Request.Form["bankNo"],
+                payType = Request.Form["payType"],
+                orderIDRef = Request.Form["orderIdRef"],
+                rcode = Request.Form["rcode"],
+                rmsg = Request.Form["rmsg"],
+                TxnAmount = Convert.ToDouble(Request.Form["TxnAmount"]),
+                txnDate = Request.Form["txnDate"],
+                txnTime = Request.Form["txnTime"],
+                ORDER_DESC = Request.Form["ORDER_DESC"]
+            };
+            ViewData["Result"]=obj.Save();
+            return View(obj);
+        }
     }
 }

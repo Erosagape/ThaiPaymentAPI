@@ -124,6 +124,7 @@ END CATCH
                         if (hdr.timestamp == this.timestamp)
                         {
                             err.error = "OK";
+                            err.success = true;
                             err.data = JsonConvert.SerializeObject(o);
                             return err;
                         }

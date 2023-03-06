@@ -1,0 +1,98 @@
+﻿@using ThaiPaymentAPI.Models;
+@{
+    ViewBag.Title = "TestPostBack";
+}
+
+<h2>TestPostBack</h2>
+<form action="Confirmation" method="POST">
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Order ID</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="orderId" value="@DateTime.Now.ToString("yyyyMMddHHMMss")" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Merchant ID</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="merchantId" value="@INETConstants.INETMerchantKeyUAT" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Bank</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="bankNo" value="KTC" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Payment Type</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="payType" value="CR" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Payment Ref</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="orderIdRef" value="@DateTime.Now.ToString("PyyyyMMddHHMMss")" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Response Code</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="rcode" value="0" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Response Message</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="rmsg" value="success" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Order Amount</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="number" name="TxnAmount" value="100" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Transaction Date</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="txnDate" value="@DateTime.Now.ToString("yyyyMMdd")" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Transaction Time</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="txnTime" value="@DateTime.Now.ToString("HHmmss")" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>Order Description</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="ORDER_DESC" value="ทดสอบระบบจ้า" />
+        </div>
+    </div>
+    <input type="submit" value="submit" />
+</form>
+

@@ -1,58 +1,21 @@
-﻿
+﻿@using ThaiPaymentAPI.Models;
 @{
     ViewBag.Title = "TestCallBack";
 }
+
 <h2>TestCallBack</h2>
-<input type="button" id="btnTest" value="Call API" onclick="TestCallBack()" />
-<script type="text/javascript">
-    function TestCallBack() {
-        /*
-        var obj = {
-            merchant_id: "990300000133",
-            timestamp: "2023-01-01T12:30:15+08:30",
-            event: "payment_status_change",
-            detail: {
-                response_code: "0",
-                response_message: "Failed",
-                merchant_id: "990300000133",
-                order_id: "202301010002",
-                payment_reference_id: "200806022341546",
-                receive_amount: "10.48",
-                payment_type: "Credit Card",
-                payment_acquirer_bank: "CITI",
-                transaction_date: "20230102",
-                transaction_time: "183058",
-                order_description: "TEST"
-            }
-        };
-        */
-        var obj = {
-            orderId: "202006101032",
-            merchantId: "990300000133",
-            bankNo: "KTC",
-            payType: "CR",
-            rcode: "0",
-            rmsg: "Success",
-            orderIDRef: "P200060100266055",
-            TxnAmount: 10.00,
-            txnDate: "20220610",
-            txnTime: "135900",
-            ORDER_DESC: "TestTest"
-        };
-        var jsonText = JSON.stringify(obj);
-        var path = '@Url.Content("~")';
-        alert(path);
-        $.ajax({
-            url: path +"api/payment",
-            type: "POST",
-            contentType: "application/json",
-            data: jsonText,
-            success: function (r) {
-                alert(r);
-            },
-            error: function (e) {
-                alert(e);
-            }
-        });
-    }
-</script>
+<form method="post" action="@Url.Content("~")api/payment">
+    <input type="hidden" name="orderId" value="@DateTime.Now.ToString("yyyyMMddHHMMss")" />
+    <input type="hidden" name="merchantId" value="@INETConstants.INETMerchantKeyUAT" />
+    <input type="hidden" name="bankNo" value="KTC" />
+    <input type="hidden" name="payType" value="CR" />
+    <input type="hidden" name="rcode" value="0" />
+    <input type="hidden" name="rmsg" value="Success" />
+    <input type="hidden" name="orderIdRef" value="P1234567890" />
+    <input type="hidden" name="TxnAmount" value="100.00" />
+    <input type="hidden" name="txnDate" value="@DateTime.Now.ToString("yyyyMMdd")" />
+    <input type="hidden" name="txnTime" value="@DateTime.Now.ToString("HHMMss")" />
+    <input type="hidden" name="ORDER_DESC" value="Test API CallBack" />
+    <input type="submit" value="submit" />
+</form>
+

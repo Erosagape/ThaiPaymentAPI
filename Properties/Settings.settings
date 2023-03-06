@@ -12,7 +12,7 @@
       <Value Profile="(Default)">https://test.thaidotcompayment.co.th/INETServiceWeb/api/v1/accesstoken</Value>
     </Setting>
     <Setting Name="INETCallbackUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://www.aih-consultant.com/backend/api/payment</Value>
+      <Value Profile="(Default)">https://www.aih-consultant.com/backend/order/confirmation</Value>
     </Setting>
   </Settings>
 </SettingsFile>

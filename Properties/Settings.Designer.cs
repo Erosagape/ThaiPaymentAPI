@@ -52,7 +52,7 @@ namespace ThaiPaymentAPI.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://www.aih-consultant.com/backend/api/payment")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.aih-consultant.com/backend/order/confirmation")]
         public string INETCallbackUrl {
             get {
                 return ((string)(this["INETCallbackUrl"]));

@@ -14,7 +14,7 @@ namespace ThaiPaymentAPI.Models
         public string merchantId { get; set; }
         public string bankNo { get; set; }
         public string payType { get; set; }
-        public string orderIdRef { get; set; }
+        public string orderIDRef { get; set; }
         public string rcode { get; set; }
         public string rmsg { get; set; }
         public double TxnAmount { get; set; }
@@ -68,7 +68,7 @@ BEGIN TRY
     COMMIT TRANSACTION
 END TRY
 BEGIN CATCH
-    ROLLBACK TRAN
+    ROLLBACK TRANSACTION
 END CATCH
 ";
                   
@@ -78,7 +78,7 @@ END CATCH
                         @rcode = this.rcode,
                         @rmsg = this.rmsg,
                         @orderid = this.orderId,
-                        @orderidref = this.orderIdRef,
+                        @orderidref = this.orderIDRef,
                         @txnamount = this.TxnAmount,
                         @paytype = this.payType,
                         @bankno = this.bankNo,
@@ -86,23 +86,53 @@ END CATCH
                         @txntime = this.txnTime,
                         @orderdesc = this.ORDER_DESC
                     });
-
+                    var ex = new ActionLog();
                     if (dtl.orderId.Equals(this.orderId))
                     {
+                        err.success = true;
                         err.error = "OK";
                         err.data = JsonConvert.SerializeObject(dtl);
-                        return err;
+                        ex = new ActionLog()
+                        {
+                            log_action = "SAV",
+                            log_data = err.data,
+                            log_message = err.error,
+                            log_source = "INETOrderPayment.Save",
+                            log_error = false,
+                            log_stacktrace = ""
+                        };
+                        return ex.Save();
                     }
+                    err.success = false;
                     err.error = "Cannot save Data";
                     err.data = JsonConvert.SerializeObject(this);
-                    return err;
+                    ex = new ActionLog()
+                    {
+                        log_action = "ERR",
+                        log_data = err.data,
+                        log_message = err.error,
+                        log_source = "INETOrderPayment.Save",
+                        log_error = true,
+                        log_stacktrace = dtl.orderId +"<>"+this.orderId
+                    };
+                    return ex.Save();
                 }
             }
             catch (Exception e)
             {
+                err.success = false;
                 err.error = e.Message;
                 err.data = JsonConvert.SerializeObject(this);
-                return err;
+                var ex = new ActionLog()
+                {
+                    log_action = "ERR",
+                    log_data = err.data,
+                    log_message = e.Message,
+                    log_source = "INETOrderPayment.Save",
+                    log_error = true,
+                    log_stacktrace = e.StackTrace
+                }.Save();
+                return ex;
             }
         }
 

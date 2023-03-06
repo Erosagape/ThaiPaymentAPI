@@ -1,0 +1,105 @@
+﻿@using ThaiPaymentAPI.Models;
+@{
+    var mdl = (INETOrderPayment)Model;
+    ViewBag.Title = "Confirmation";
+    var result = (ErrorResponse)ViewData["Result"];
+}
+<h2>Order Confirmation</h2>
+<p>
+    Message : <span>@result.error</span>
+    @{           
+        if (!result.success)
+        {
+            <span>Data : <br/>@result.data</span>
+        }
+    }
+</p>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Order ID</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.orderId
+    </div>
+</dic>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Merchant ID</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.merchantId
+    </div>
+</dic>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Bank</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.bankNo
+    </div>
+</dic>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Payment Type</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.payType
+    </div>
+</dic>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Payment Ref</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.orderIDRef
+    </div>
+</dic>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Response Code</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.rcode
+    </div>
+</dic>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Response Message</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.rmsg
+    </div>
+</dic>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Order Amount</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.TxnAmount
+    </div>
+</dic>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Transaction Date</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.txnDate
+    </div>
+</dic>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Transaction Time</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.txnTime
+    </div>
+</dic>
+<dic class="row">
+    <div class="col-sm-4">
+        <label>Order Description</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.ORDER_DESC
+    </div>
+</dic>
+<input type="button" value="OK" />

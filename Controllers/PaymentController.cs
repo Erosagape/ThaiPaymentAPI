@@ -8,6 +8,9 @@ using System.Data.SqlClient;
 using Newtonsoft.Json;
 using ThaiPaymentAPI.Models;
 using Dapper;
+using System.Collections.Specialized;
+using System.Net.Http.Formatting;
+
 namespace ThaiPaymentAPI.Controllers
 {
     public class PaymentController : ApiController
@@ -64,17 +67,29 @@ namespace ThaiPaymentAPI.Controllers
                 return hdr;
             }
         }
-
         // POST api/<controller>
-        public string Post([FromBody] object value)
+        public string Post(FormDataCollection postData)
         {
-            //if (value.merchant_id == null)
-            //{
-            //    return "No data to process";
-            //}
-            return JsonConvert.SerializeObject(value);
-            //var msg = value.Save();            
-            //return msg.error;
+            if (postData == null)
+            {
+                return "Not found form Data sent";
+            }
+            string str = "";
+            foreach(var val in postData)
+            {
+                str += (str != "" ? "," : "");
+                str += val.Key + "=" + val.Value + "";
+            }
+            ActionLog log = new ActionLog()
+            {
+                log_action = "RES",
+                log_message = "POST",
+                log_data = str,
+                log_error = false,
+                log_source = "api/payment",
+                log_stacktrace = DateTime.Now.ToString("yyyyMMddHHMMss")
+            };
+            return log.Save().error;
         }
         // PUT api/<controller>/5
         public void Put(int id, [FromBody] string value)
