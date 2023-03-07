@@ -58,5 +58,14 @@ namespace ThaiPaymentAPI.Properties {
                 return ((string)(this["INETCallbackUrl"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://portal.thaidotcompayment.co.th/INETServiceWeb/api/v1/accesstoken")]
+        public string INETUrlOrderPlacePRD {
+            get {
+                return ((string)(this["INETUrlOrderPlacePRD"]));
+            }
+        }
     }
 }

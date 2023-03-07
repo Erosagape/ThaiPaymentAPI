@@ -74,12 +74,39 @@ namespace ThaiPaymentAPI.Controllers
             {
                 return "Not found form Data sent";
             }
+            var obj = new INETOrderPayment()
+            {
+                orderId = postData["orderId"],
+                merchantId = postData["merchantId"],
+                bankNo = postData["bankNo"],
+                payType = postData["payType"],
+                orderIDRef = postData["orderIdRef"],
+                rcode = postData["rcode"],
+                rmsg = postData["rmsg"],
+                TxnAmount = Convert.ToDouble(postData["TxnAmount"]),
+                txnDate = postData["txnDate"],
+                txnTime = postData["txnTime"],
+                ORDER_DESC = postData["ORDER_DESC"]
+            };
+            var result = obj.Save();
+            var log = new ActionLog()
+            {
+                log_action = "POST",
+                log_source = "api/payment",
+                log_data = JsonConvert.SerializeObject(obj),
+                log_message = (result.success ? "Save Complete" : result.error),
+                log_error = !result.success,
+                log_stacktrace = result.data
+            }.Save();
+            return result.error;
+            /*
             string str = "";
             foreach(var val in postData)
             {
                 str += (str != "" ? "," : "");
                 str += val.Key + "=" + val.Value + "";
             }
+            
             ActionLog log = new ActionLog()
             {
                 log_action = "RES",
@@ -90,6 +117,8 @@ namespace ThaiPaymentAPI.Controllers
                 log_stacktrace = DateTime.Now.ToString("yyyyMMddHHMMss")
             };
             return log.Save().error;
+            */
+
         }
         // PUT api/<controller>/5
         public void Put(int id, [FromBody] string value)

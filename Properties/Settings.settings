@@ -14,5 +14,8 @@
     <Setting Name="INETCallbackUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://www.aih-consultant.com/backend/order/confirmation</Value>
     </Setting>
+    <Setting Name="INETUrlOrderPlacePRD" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://portal.thaidotcompayment.co.th/INETServiceWeb/api/v1/accesstoken</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

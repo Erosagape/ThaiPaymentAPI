@@ -1,0 +1,12 @@
+﻿@using ThaiPaymentAPI.Models;
+@{
+    ViewBag.Title = "Delete";
+    var mdl = (SystemConfig)Model;
+}
+<h2>Delete</h2>
+<form method="post" action="">
+    Type Config Code to Delete (@mdl.ConfigCode): 
+    <input type="text" name="confirm" class="form-control" value="" />
+    <button type="submit" class="btn btn-danger" value="submit">Confirm Delete</button>
+</form>
+

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using Newtonsoft.Json;
 namespace ThaiPaymentAPI.Models
 {
     public class INETOrderResponse
@@ -13,5 +13,17 @@ namespace ThaiPaymentAPI.Models
         public string link { get; set; }
         public string ref1 { get; set; }
         public string ref2 { get; set; }
+        public ErrorResponse Save()
+        {
+            return new ActionLog()
+            {
+                log_action = "RES",
+                log_message = this.message,
+                log_error = !this.status.ToLower().Equals("success"),
+                log_data = JsonConvert.SerializeObject(this),
+                log_source = "INETOrderResponse.Save()",
+                log_stacktrace = "REF1:" + this.ref1 + ",REF2:" + this.ref2
+            }.Save();
+        }
     }
 }

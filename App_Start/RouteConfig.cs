@@ -18,6 +18,12 @@ namespace ThaiPaymentAPI
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Config",
+                url: "{controller}/{action}/{code}/{key}",
+                defaults: new { controller = "Config", action = "Index", key = UrlParameter.Optional }
+            );
         }
     }
 }

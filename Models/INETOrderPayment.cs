@@ -21,14 +21,9 @@ namespace ThaiPaymentAPI.Models
         public string txnDate { get; set; }
         public string txnTime { get; set; }
         public string ORDER_DESC { get; set; }
-        public ErrorResponse Save()
+        public string GetSQLCommand()
         {
-            var err = new ErrorResponse();
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString))
-                {
-                    string sql = @"
+            return @"
 BEGIN TRY
     BEGIN TRANSACTION
 
@@ -71,6 +66,15 @@ BEGIN CATCH
     ROLLBACK TRANSACTION
 END CATCH
 ";
+        }
+        public ErrorResponse Save()
+        {
+            var err = new ErrorResponse();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString))
+                {
+                    string sql = GetSQLCommand();
                   
                     var dtl = cn.QueryFirstOrDefault<INETOrderPayment>(sql, new
                     {

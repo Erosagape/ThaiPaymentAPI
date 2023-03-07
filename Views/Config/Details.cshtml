@@ -1,0 +1,32 @@
+﻿@using ThaiPaymentAPI.Models;
+@{
+    ViewBag.Title = "Details";
+    var mdl = (SystemConfig)Model;
+}
+<h2>Config Details</h2>
+<div class="row">
+    <div class="col-sm-2">
+        <label>Config Code</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.ConfigCode
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+        <label>Config Key</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.ConfigKey
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+        <label>Config Value</label>
+    </div>
+    <div class="col-sm-6">
+        @mdl.ConfigValue
+    </div>
+</div>
+<a href="@Url.Content("~")Config/Edit/@mdl.ConfigCode/@mdl.ConfigKey" class="btn btn-warning">Edit</a>
+<a href="@Url.Content("~")Config/Delete/@mdl.ConfigCode/@mdl.ConfigKey" class="btn btn-danger">Delete</a>

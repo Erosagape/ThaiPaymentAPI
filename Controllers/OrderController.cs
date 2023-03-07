@@ -19,6 +19,11 @@ namespace ThaiPaymentAPI.Controllers
         {
             return View();
         }
+        public ActionResult TestProduction()
+        {
+            return View();
+        }
+
         public ActionResult TestPayment()
         {
             var obj = (INETOrderResponse)TempData["payment"];
@@ -51,6 +56,7 @@ namespace ThaiPaymentAPI.Controllers
             };
             try
             {
+                order.Save();
                 ServicePointManager.Expect100Continue = true;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 
@@ -76,6 +82,7 @@ namespace ThaiPaymentAPI.Controllers
                     TempData["payment"] = obj;
                     return RedirectToAction("TestPayment");
                 }
+                obj.Save();
                 return View("TestResult",obj);
             }
             catch(Exception e)
@@ -89,9 +96,82 @@ namespace ThaiPaymentAPI.Controllers
                     ref1 = "UAT:" + INETConstants.INETMerchantKeyUAT,
                     ref2 = "PRD:" + INETConstants.INETMerchantKeyPRD
                 };
+                obj.Save();
                 return View("TestResult", obj);
             }            
         }
+        [HttpPost]
+        [ActionName("TestProduction")]
+        public ActionResult PostTestProduction()
+        {
+            var order = new INETOrderRequest()
+            {
+                key = INETConstants.INETMerchantKeyPRD,
+                orderId = Request.Form["orderId"],
+                orderDesc = Request.Form["orderDesc"],
+                amount = Request.Form["amount"],
+                apUrl = INETConstants.INETCallbackUrl,
+                ud1 = "",
+                ud2 = "",
+                ud3 = "",
+                ud4 = "",
+                ud5 = "",
+                lang = Request.Form["lang"],
+                bankNo = "KTC",
+                currCode = Request.Form["currCode"],
+                payType = Request.Form["payType"],
+                inst = "",
+                term = "",
+                supplierId = "",
+                productId = ""
+            };
+            try
+            {
+                order.Save();
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                var req = WebRequest.Create(INETConstants.INETUrlOrderPlacePRD);
+                req.Method = "POST";
+
+                var json = JsonConvert.SerializeObject(order);
+                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
+                req.ContentType = "application/json";
+                req.ContentLength = bytes.Length;
+                
+                var stream = req.GetRequestStream();
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Close();
+
+                var response = req.GetResponse();
+                var res = response.GetResponseStream();
+                var reader = new System.IO.StreamReader(res);
+                var responseStr = reader.ReadToEnd();
+                var obj = JsonConvert.DeserializeObject<INETOrderResponse>(responseStr);
+                if (obj.status.Equals("success"))
+                {
+                    TempData["payment"] = obj;
+                    return RedirectToAction("TestPayment");
+                }
+                obj.Save();
+                return View("TestResult", obj);
+            }
+            catch (Exception e)
+            {
+                var obj = new INETOrderResponse()
+                {
+                    status = "500",
+                    message = e.Message,
+                    link = INETConstants.INETUrlOrderPlacePRD,
+                    token = e.StackTrace,
+                    ref1 = "UAT:" + INETConstants.INETMerchantKeyUAT,
+                    ref2 = "PRD:" + INETConstants.INETMerchantKeyPRD
+                };
+                obj.Save();
+                return View("TestResult", obj);
+            }
+        }
+
         public ActionResult TestPostBack()
         {
             return View();

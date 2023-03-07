@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Config Create</h2>
+<form method="post" action="">
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Config Code</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="ConfigCode" value="" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Config Key</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="ConfigKey" value="" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Config Value</label>
+        </div>
+        <div class="col-sm-6">
+            <textarea class="form-control" name="ConfigValue"></textarea>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-success" value="Save" />
+</form>
+

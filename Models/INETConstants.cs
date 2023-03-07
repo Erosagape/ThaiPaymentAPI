@@ -10,6 +10,7 @@ namespace ThaiPaymentAPI.Models
         public static string INETMerchantKeyUAT = Properties.Settings.Default.INETMerchantKeyUAT;
         public static string INETMerchantKeyPRD = Properties.Settings.Default.INETMerchantKeyPRD;
         public static string INETUrlOrderPlaceUAT = Properties.Settings.Default.INETUrlOrderPlaceUAT;
+        public static string INETUrlOrderPlacePRD = Properties.Settings.Default.INETUrlOrderPlacePRD;
         public static string INETCallbackUrl = Properties.Settings.Default.INETCallbackUrl;
         public static string[] Language=new string[] { "E","T" };
         public static Dictionary<string,int> Currency

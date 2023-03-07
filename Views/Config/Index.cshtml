@@ -1,0 +1,35 @@
+﻿@using ThaiPaymentAPI.Models;
+@{
+    ViewBag.Title = "Index";
+    var data = (List<SystemConfig>)ViewData["DataSource"];
+    var result = (ErrorResponse)ViewData["Result"];
+}
+<h2>Config List</h2>
+<a href="@Url.Content("~")Config/Create" class="btn btn-success">New</a>
+<b>@result.error</b>
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Config Code</th>
+            <th>Config Key</th>
+            <th>Config Value</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    @if (data != null)
+    {
+        <tbody>
+            @foreach (SystemConfig cfg in data)
+            {
+                <tr>
+                    <td>@cfg.ConfigCode</td>
+                    <td>@cfg.ConfigKey</td>
+                    <td>@cfg.ConfigValue</td>
+                    <td>
+                        <a href="@Url.Content("~")Config/Details/@cfg.ConfigCode/@cfg.ConfigKey" class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    }
+</table>
