@@ -1,0 +1,10 @@
+﻿@using ThaiPaymentAPI.Models;
+@{
+    ViewBag.Title = "Sign Up";
+    var res = (ErrorResponse)ViewData["Result"];
+}
+
+<h2>Sign Up</h2>
+<b>@res.error</b>
+<br/>
+@res.data
