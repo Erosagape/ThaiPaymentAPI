@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+}
+<h2>Test</h2>
+<form method="post" action="">
+    <div class="row">
+        <div class="col-sm-2">
+            <label>From :</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="fromPerson" value="" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Email :</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="email" class="form-control" name="fromEmail" value="" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>To :</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="toPerson" value="" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Email :</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="email" class="form-control" name="toEmail" value="" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Subject :</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="subject" value="" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>body :</label>
+        </div>
+        <div class="col-sm-6">
+            <textarea class="form-control" name="mailbody"></textarea>
+        </div>
+    </div>
+    <input type="submit" value="Sent" class="btn btn-success" />
+    <br/>
+    @ViewData["Message"]
+</form>

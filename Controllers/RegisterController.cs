@@ -64,16 +64,62 @@ namespace ThaiPaymentAPI.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewData["Result"] = new ErrorResponse()
+            var mail = (MailBody)TempData["MailData"];
+            var msg = EMailHelper.GetNewEMail();
+            msg.fromPerson = "AIH Administrator";
+            msg.fromEmail = "no-reply@aih-colsultant.com";
+            msg.toEmail = mail.email_address;
+            msg.toPerson = mail.email_owner_full;
+            msg.subject = "Verification for User " + mail.email_owner_short;
+            msg.body = @"
+Dear " + mail.email_owner_full + @",<br/>
+<br/>
+Please send your passport/id card to register@aih-consultant.com for verification via this below link.
+<br/>
+<a href=""https://www.aih-consultant.com/backend/register/verification?id="+ mail.email_owner_short +@""">Click</a>
+<br/>
+<br/>
+Thank you and Best Regards,
+<br/>
+Administrator
+";            
+            var result = EMailHelper.SentEMail(msg);
+            if (result.success)
             {
-                success = true,
-                data = "Mail sent,Please check your inbox! ",
-                error = "Success"
-            };
-            ViewData["DataSource"] = (MailBody)TempData["MailData"];
+                ViewData["Result"] = new ErrorResponse()
+                {
+                    success = true,
+                    data = "Mail sent,Please check your inbox! ",
+                    error = "Success"
+                };
+            } else
+            {
+                ViewData["Result"] = new ErrorResponse()
+                {
+                    success = false,
+                    data = result.data,
+                    error = result.error
+                };
+
+            }
             return View();
         }
         public ActionResult TestSignUp()
+        { 
+            return View();
+        }
+        public ActionResult Verification()
+        {
+            ViewBag.UserRegister=Request.QueryString["id"];
+            return View();
+        }
+        [HttpPost]
+        [ActionName("Verification")]
+        public ActionResult PostVerification()
+        {
+            return RedirectToAction("Success");
+        }
+        public ActionResult Success()
         {
             return View();
         }

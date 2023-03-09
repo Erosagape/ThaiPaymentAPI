@@ -1,35 +1,10 @@
 ﻿@using ThaiPaymentAPI.Controllers;
 @{
     ViewBag.Title = "Register";
-    var mail = (MailBody)ViewData["DataSource"];
     var res = (ThaiPaymentAPI.Models.ErrorResponse)ViewData["Result"];
 }
 
-<h2>Register</h2>
+<h2>Sign Up</h2>
 <b>@res.error</b>
 <br />
 @res.data
-<div class="row">
-    <div class="col">
-        To Email :
-    </div>
-    <div class="col">
-        @mail.email_address
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        To :
-    </div>
-    <div class="col">
-        @mail.email_owner_full
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        Your User ID :
-    </div>
-    <div class="col">
-        @mail.email_owner_short
-    </div>
-</div>

@@ -62,6 +62,9 @@ namespace ThaiPaymentAPI.Controllers
             };
             return Json(data.Save(),JsonRequestBehavior.AllowGet);
         }
-
+        public string TestSentMail()
+        {
+            return EMailHelper.TestSentMail();
+        }
     }
 }

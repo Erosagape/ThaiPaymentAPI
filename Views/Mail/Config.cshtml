@@ -1,0 +1,57 @@
+﻿@using ThaiPaymentAPI.Models;
+@{
+    ViewBag.Title = "Config";
+    var data = (MailMessage)Model;
+}
+<h2>Config</h2>
+<form method="post" action="">
+    <div class="row">
+        <div class="col-sm-2">
+            <label>SMTP Server</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="smtpHost" value="@data.smtpHost" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>SMTP Port</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="smtpPort" value="@data.smtpPort" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>SMTP Account</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="email" name="emailAddress" value="@data.emailAddress" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>SMTP Password</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="password" name="emailPassword" value="@data.emailPassword" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Use SSL</label>
+        </div>
+        <div class="col-sm-6">
+            @if (data.useSSL==true)
+            {
+                <input type="checkbox" name="useSSL" checked/>
+            }
+            else
+            {
+                <input type="checkbox" name="useSSL" />
+            }
+        </div>
+    </div>
+    <input type="submit" value="Save" class="btn btn-success" />
+    @ViewData["Message"]
+</form>
