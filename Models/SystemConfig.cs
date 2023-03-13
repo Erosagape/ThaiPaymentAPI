@@ -20,7 +20,13 @@ namespace ThaiPaymentAPI.Models
                 return cn.Query<SystemConfig>("SELECT * FROM [dbo].[SystemConfig]");
             }
         }
-        public bool GetValue()
+        public string GetValue(string defaultValue="")
+        {
+            if (this.Get())
+                return this.ConfigValue;
+            return defaultValue;
+        }
+        public bool Get()
         {
             using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString))
             {

@@ -1,0 +1,29 @@
+﻿@using ThaiPaymentAPI.Models;
+@{
+    ViewBag.Title = "Group";
+    var mdl = (List<OrderGroup>)Model;
+}
+<h2>Group</h2>
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Group Code</th>
+            <th>Group Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            foreach(var data in mdl)
+            {
+                <tr>
+                    <td>@data.order_group</td>
+                    <td>@data.order_groupname</td>
+                    <td>
+                        <a href="@Url.Content("~/Order/GroupEdit")@data.order_group" class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -207,5 +207,14 @@ namespace ThaiPaymentAPI.Controllers
             ViewData["Result"]=obj.Save();
             return View(obj);
         }
+        public ActionResult Group()
+        {
+            var mdl = new OrderGroup().Gets().ToList();
+            return View(mdl);
+        }
+        public ActionResult GroupEdit()
+        {
+            return View();
+        }
     }
 }
