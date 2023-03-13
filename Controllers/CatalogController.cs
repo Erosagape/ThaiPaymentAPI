@@ -11,7 +11,9 @@ namespace ThaiPaymentAPI.Controllers
         // GET: Catalog
         public ActionResult Index()
         {
-            ViewData["ExchangeRate"] = Convert.ToInt32(new Models.SystemConfig() { ConfigCode = "DEFAULT", ConfigKey= "RATE_THB" }.GetValue("1"));
+            ViewBag.GroupData = new Models.OrderGroup().Gets().Where(e => e.isactive == true).ToList();
+            ViewBag.DataSource = new Models.OrderDetail().Gets().Where(e=>e.isactive.Equals(true)).ToList();
+            ViewData["ExchangeRate"] = Convert.ToInt32(new Models.SystemConfig() { ConfigCode = "DEFAULT", ConfigKey= "RATE_USD" }.GetValue("1"));
             ViewData["Message"] = "Ready";
             return View();
         }

@@ -1,7 +1,85 @@
-﻿
+﻿@using ThaiPaymentAPI.Models;
 @{
     ViewBag.Title = "Create";
 }
-
-<h2>Create</h2>
+<h2>Create Order</h2>
+<form method="post" action="@Url.Action("Edit","Order")">
+    <div class="row">
+        <div class="col-sm-2">
+            <label>ORDER ID</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="order_id" value="@DateTime.Now.ToString("yyyyMMddHHMMss")" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>ORDER NAME</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="order_name" value="" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>ORDER DESC</label>
+        </div>
+        <div class="col-sm-6">
+            <textarea class="form-control" name="order_desc"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>ORDER GROUP</label>
+        </div>
+        <div class="col-sm-6">
+            <select name="order_group" class="form-control dropdown">
+                @foreach (OrderGroup group in (List<OrderGroup>)ViewBag.GroupData)
+                {
+                    <option value="@group.order_group">@group.order_groupname</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>ORDER AMOUNT</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="order_amount" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>CURRENCY</label>
+        </div>
+        <div class="col-sm-6">
+            <select name="currency" class="form-control dropdown">
+                @foreach (string curr in (string[])ViewBag.Currencys)
+                {
+                    <option value="@curr">@curr</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>ORDER PIC</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="order_pic" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>ORDER TARGET</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="order_target" />
+        </div>
+    </div>
+    <input type="hidden" value="0" name="order_actual" />
+    <input type="hidden" value="true" name="isactive" />
+    <input type="submit" class="btn btn-success" value="Save Order" />
+</form>
 

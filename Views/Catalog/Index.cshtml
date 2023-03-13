@@ -1,8 +1,31 @@
-﻿
+﻿@using ThaiPaymentAPI.Models
 @{
     ViewBag.Title = "Catalog";
+    var groupData = (List<OrderGroup>)ViewBag.GroupData;
+    var data = (List<OrderDetail>)ViewBag.DataSource;
 }
 <h2>@ViewBag.Title</h2>
+@{ 
+    foreach(OrderGroup group in groupData)
+            {
+    <h3>@group.order_groupname</h3>
+    <p>
+        @group.order_groupdesc
+        <br />
+        @foreach (OrderDetail row in data.Where(e => e.order_group.Equals(group.order_group)))
+        {
+    <div class="container-fluid">
+        <h4>@row.order_name</h4>
+        @row.order_desc
+        <br />
+        <b>Donate Price : </b> <u>@row.order_amount @row.currency</u>
+        <br />
+        <b>Current Donation </b> <span>@row.order_actual</span> <b>Target Donation</b> <span> @row.order_target</span> @row.currency
+    </div>
+        }
+    </p>
+            }
+}
 
 @ViewData["Message"]
 

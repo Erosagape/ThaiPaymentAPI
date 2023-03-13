@@ -311,6 +311,7 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Order\Group.cshtml" />
     <Content Include="Views\Order\GroupEdit.cshtml" />
+    <Content Include="Views\Order\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

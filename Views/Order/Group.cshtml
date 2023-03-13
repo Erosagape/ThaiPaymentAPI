@@ -2,13 +2,16 @@
 @{
     ViewBag.Title = "Group";
     var mdl = (List<OrderGroup>)Model;
+    var result = (ErrorResponse)ViewBag.Message;
 }
 <h2>Group</h2>
+<a href="@Url.Content("~/Order/GroupEdit")" class="btn btn-success">New</a>
 <table class="table table-responsive">
     <thead>
         <tr>
             <th>Group Code</th>
             <th>Group Name</th>
+            <th>Active</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -19,11 +22,14 @@
                 <tr>
                     <td>@data.order_group</td>
                     <td>@data.order_groupname</td>
+                    <td>@data.isactive</td>
                     <td>
-                        <a href="@Url.Content("~/Order/GroupEdit")@data.order_group" class="btn btn-primary">Edit</a>
+                        <a href="@Url.Content("~/Order/GroupEdit")?id=@data.order_group" class="btn btn-primary">Edit</a>
+                        <a href="@Url.Content("~/Order/List")?group=@data.order_group" class="btn btn-success">Details</a>
                     </td>
                 </tr>
             }
         }
     </tbody>
 </table>
+@result.error

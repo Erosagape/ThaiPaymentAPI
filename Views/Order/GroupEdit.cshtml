@@ -1,7 +1,48 @@
-﻿
+﻿@using ThaiPaymentAPI.Models;
 @{
     ViewBag.Title = "GroupEdit";
+    var mdl = (OrderGroup)Model;
 }
-
-<h2>GroupEdit</h2>
-
+<h2>Group Edit</h2>
+<form action="" method="post">
+    <div class="row">
+        <div class="col-sm-2">
+            Group Code
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="order_group" value="@mdl.order_group" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            Group Name
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="order_groupname" value="@mdl.order_groupname" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            Group Name
+        </div>
+        <div class="col-sm-6">
+            <textarea class="form-control" name="order_groupdesc">@mdl.order_groupdesc</textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Active</label>
+        </div>
+        <div class="col-sm-6">
+            @if (mdl.isactive== true)
+            {
+                <input type="checkbox" name="isactive" checked />
+            }
+            else
+            {
+                <input type="checkbox" name="isactive" />
+            }
+        </div>
+    </div>
+    <input type="submit" value="Save" class="btn btn-success" />
+</form>

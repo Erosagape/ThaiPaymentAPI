@@ -1,7 +1,38 @@
-﻿
+﻿@using ThaiPaymentAPI.Models;
 @{
     ViewBag.Title = "List";
+    var products = (List<OrderDetail>)ViewBag.DataSource;
+    var result = (ErrorResponse)ViewData["Message"];
 }
-
-<h2>List</h2>
-
+<h2>Order List</h2>
+<a href="@Url.Content("~/Order/Create")" class="btn btn-success">New</a>
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Group</th>
+            <th>Target Sales</th>
+            <th>Actual Sales</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    @{ if (products.Count > 0)
+        {
+            <tbody>
+                @foreach (OrderDetail data in products)
+                {
+                    <tr>
+                        <td>@data.order_name</td>
+                        <td>@data.order_group</td>
+                        <td>@data.order_target</td>
+                        <td>@data.order_actual</td>
+                        <td>
+                            <a href="@Url.Content("~/Order/Edit")?id=@data.order_id" class="btn btn-primary">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        }
+    }
+</table>
+@result.error

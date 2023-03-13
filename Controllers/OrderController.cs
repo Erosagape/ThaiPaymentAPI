@@ -210,10 +210,129 @@ namespace ThaiPaymentAPI.Controllers
         public ActionResult Group()
         {
             var mdl = new OrderGroup().Gets().ToList();
+            ViewBag.Message = new ErrorResponse()
+            {
+                success = true,
+                data = "",
+                error = "Ready"
+            };
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = (ErrorResponse)TempData["Message"];
+            }
             return View(mdl);
-        }
+        }   
         public ActionResult GroupEdit()
         {
+            var group_code = Request.QueryString["id"];
+            if (group_code == null)
+            {
+                var mdl = new OrderGroup();
+                return View(mdl);
+            }
+            else
+            {
+                var mdl = new OrderGroup().GetValue(group_code);
+                return View(mdl);
+            }
+        }
+        [HttpPost]
+        [ActionName("GroupEdit")]
+        public ActionResult PostGroupEdit(FormCollection form) 
+        {
+            var data = new OrderGroup()
+            {
+                order_group = form["order_group"],
+                order_groupname = form["order_groupname"],
+                order_groupdesc = form["order_groupdesc"],
+                isactive = (form["isactive"]==null? false :true)
+            };
+            TempData["Message"]=data.Save();
+            return RedirectToAction("Group");
+        }
+        public ActionResult List()
+        {
+            var group = Request.QueryString["group"];
+            if (group != null)
+            {
+                ViewBag.DataSource = new OrderDetail().Gets().Where(e => e.isactive.Equals(true) && e.order_group.Equals(group)).ToList();
+            }
+            else
+            {
+                ViewBag.DataSource = new OrderDetail().Gets().Where(e => e.isactive.Equals(true)).ToList();
+            };
+            if (TempData["Message"] != null)
+            {
+                ViewData["Message"] = (ErrorResponse)TempData["Message"];
+            } else
+            {
+                ViewData["Message"] = new ErrorResponse()
+                {
+                    success = true,
+                    data = "",
+                    error = "Ready"
+                };
+            }
+            return View();
+        }
+        public ActionResult Edit()
+        {
+            var id = Request.QueryString["id"];
+            var mdl=new OrderDetail();
+            if (id != null)
+            {
+                mdl = new OrderDetail().Gets().Where(e => e.order_id.Equals(id)).FirstOrDefault();
+            }
+            ViewBag.GroupData = new OrderGroup().Gets();
+            var curr = new SystemConfig().Gets().Where(
+                e => e.ConfigCode.Equals("DEFAULT")
+                && e.ConfigKey.Equals("ORDER_CURRENCY")
+                ).FirstOrDefault().ConfigValue;
+            if (curr != "")
+            {
+                ViewBag.Currencys = curr.Split(',');
+            }
+            else
+            {
+                ViewBag.Currencys = new string[] { "USD", "THB" };
+            }
+            return View(mdl);
+        }
+        [HttpPost]
+        [ActionName("Edit")]
+        public ActionResult PostEdit(FormCollection form)
+        {
+            var data = new OrderDetail()
+            {
+                order_id=form["order_id"],
+                order_name=form["order_name"],
+                order_desc=form["order_desc"],
+                order_group=form["order_group"],
+                order_pic=form["order_pic"],
+                currency=form["currency"],
+                order_actual=Convert.ToDouble(form["order_actual"]),
+                order_target=Convert.ToDouble(form["order_target"]),
+                order_amount=Convert.ToDouble(form["order_amount"]),
+                isactive=(form["isactive"]==null?false:true)
+            };
+            TempData["Message"] = data.Save();
+            return RedirectToAction("List");
+        }
+        public ActionResult Create()
+        {
+            ViewBag.GroupData = new OrderGroup().Gets();
+            var curr = new SystemConfig().Gets().Where(
+                e => e.ConfigCode.Equals("DEFAULT")
+                && e.ConfigKey.Equals("ORDER_CURRENCY")
+                ).FirstOrDefault().ConfigValue.ToString();
+            if (curr != "")
+            {
+                ViewBag.Currencys = curr.Split(',');
+            }
+            else
+            {
+                ViewBag.Currencys = new string[] { "USD", "THB" };
+            }
             return View();
         }
     }
