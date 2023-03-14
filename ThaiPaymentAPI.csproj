@@ -312,6 +312,8 @@
     <Content Include="Views\Order\Group.cshtml" />
     <Content Include="Views\Order\GroupEdit.cshtml" />
     <Content Include="Views\Order\Edit.cshtml" />
+    <Content Include="Views\Shared\MasterPage.cshtml" />
+    <Content Include="Views\Order\Payment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
