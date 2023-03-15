@@ -3,29 +3,47 @@
     ViewBag.Title = "Catalog";
     var groupData = (List<OrderGroup>)ViewBag.GroupData;
     var data = (List<OrderDetail>)ViewBag.DataSource;
-}
-<h2>@ViewBag.Title</h2>
-@{ 
+    var i = 0;
     foreach(OrderGroup group in groupData)
-            {
-    <h3>@group.order_groupname</h3>
+    {
+        i = 0;
+    <h1 class="services_taital">@group.order_groupname</h1>
     <p>
         @group.order_groupdesc
-        <br />
-        @foreach (OrderDetail row in data.Where(e => e.order_group.Equals(group.order_group)))
-        {
-    <div class="container-fluid">
-        <h4>@row.order_name</h4>
-        @row.order_desc
-        <br />
-        <b>Donate Price : </b> <u>@row.order_amount @row.currency</u>
-        <br />
-        <b>Current Donation </b> <span>@row.order_actual</span> <b>Target Donation</b> <span> @row.order_target</span> @row.currency
-    </div>
-        }
-    </p>
+        <div class="row">
+            @foreach (OrderDetail row in data.Where(e => e.order_group.Equals(group.order_group)))
+            {
+                i += 1;
+            <div class="col-md-4">
+                <div class="choose_box">
+                    <div class="number_1">
+                        <h4 class="number_text">@i</h4>
+                        <h4 class="trusted_text">
+                            @row.order_name
+                        </h4>
+                    </div>
+                    @if (System.IO.File.Exists(Server.MapPath(row.order_pic)))
+                    {
+                        <p><img src="@row.order_pic" style="width:auto;" /></p>
+                    }
+                    <p class="dummy_text">
+                        @row.order_desc
+                    </p>
+                    <p class="dummy_text">
+                        <b>Donate Price : </b> <u>@row.order_amount @row.currency</u>
+                        <br />
+                        <b>Current Donation </b> <span>@row.order_actual</span> <b>Target Donation</b> <span> @row.order_target</span> @row.currency
+                    </p>
+                    <p class="dummy_text">
+                        <button class="btn btn-primary" onclick="window.location.href='@Url.Content("~")order/payment/@row.order_id';">Payment Now</button>
+                        <button class="btn btn-success" onclick="window.location.href='@Url.Content("~")cart/add/@row.order_id';">Add To Cart</button>
+                    </p>
+                </div>
+            </div>
             }
+        </div>
+    </p>
+    }
 }
-
 @ViewData["Message"]
 

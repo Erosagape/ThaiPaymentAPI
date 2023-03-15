@@ -30,7 +30,7 @@ namespace ThaiPaymentAPI.Models
         }
         public ErrorResponse Save()
         {
-            using(SqlConnection cn=new SqlConnection(ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString))
+            using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString))
             {
                 string sql = @"
 BEGIN TRY
@@ -59,14 +59,14 @@ SELECT * FROM [dbo].[Project_OrderGroup] WHERE [order_group]=@groupcode
 ";
                 try
                 {
-                    var o=cn.QueryFirstOrDefault<OrderGroup>(sql, new
+                    var o = cn.QueryFirstOrDefault<OrderGroup>(sql, new
                     {
                         @groupcode = this.order_group,
                         @groupname = this.order_groupname,
                         @groupdesc = this.order_groupdesc,
                         @isactive = this.isactive
                     });
-                    if (o!=null)
+                    if (o != null)
                     {
                         return new ErrorResponse()
                         {
@@ -89,7 +89,7 @@ SELECT * FROM [dbo].[Project_OrderGroup] WHERE [order_group]=@groupcode
                     return new ErrorResponse()
                     {
                         success = false,
-                        error =e.Message,
+                        error = e.Message,
                         data = JsonConvert.SerializeObject(this)
                     };
                 }
@@ -110,14 +110,14 @@ SELECT * FROM [dbo].[Project_OrderGroup] WHERE [order_group]=@groupcode
         public bool isactive { get; set; }
         public IEnumerable<OrderDetail> Gets()
         {
-            using(SqlConnection cn=new SqlConnection(ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString))
+            using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString))
             {
                 return cn.Query<OrderDetail>("SELECT * FROM [dbo].[Project_OrderDetail]");
             }
         }
         public ErrorResponse Save()
         {
-            try 
+            try
             {
                 using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString))
                 {
@@ -223,5 +223,5 @@ SELECT * FROM [dbo].[Project_OrderDetail] WHERE order_id=@order_id
                 };
             }
         }
-    }
+    } 
 }

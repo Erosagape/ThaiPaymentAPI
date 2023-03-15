@@ -4,7 +4,7 @@
     var data = (OrderDetail)Model;
 }
 <h2>Edit Order</h2>
-<form method="post" action="">
+<form method="post" action="" enctype="multipart/form-data">
     <div class="row">
         <div class="col-sm-2">
             <label>ORDER ID</label>
@@ -82,7 +82,14 @@
             <label>ORDER PIC</label>
         </div>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="order_pic" value="@data.order_pic" />
+            <input type="file" name="order_pic" />
+            <input type="text" class="form-control" value="@data.order_pic" />
+            @{
+            if (System.IO.File.Exists(Server.MapPath(data.order_pic)))
+            {
+                    <img src="@data.order_pic" style="width:auto" />
+            }
+            }
         </div>
     </div>
     <div class="row">

@@ -3,7 +3,7 @@
     ViewBag.Title = "Create";
 }
 <h2>Create Order</h2>
-<form method="post" action="@Url.Action("Edit","Order")">
+<form method="post" action="@Url.Action("Edit","Order")" enctype="multipart/form-data">
     <div class="row">
         <div class="col-sm-2">
             <label>ORDER ID</label>
@@ -67,7 +67,7 @@
             <label>ORDER PIC</label>
         </div>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="order_pic" />
+            <input type="file" class="form-control" name="order_pic" />
         </div>
     </div>
     <div class="row">

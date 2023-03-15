@@ -1,7 +1,122 @@
-﻿
+﻿@using ThaiPaymentAPI.Models; 
 @{
     ViewBag.Title = "Index";
+    var data = (List<ShoppingCart>)Model;
+    var result = (ErrorResponse)ViewBag.Message;
+}
+<style>
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+font-size: 1rem;
+line-height: 2.15;
+padding-left: .75em;
+padding-right: .75em;
 }
 
-<h2>Index</h2>
+.card-registration .select-arrow {
+top: 13px;
+}
 
+.bg-grey {
+background-color: #eae8e8;
+}
+
+@@media (min-width: 992px) {
+.card-registration-2 .bg-grey {
+border-top-right-radius: 16px;
+border-bottom-right-radius: 16px;
+}
+}
+
+@@media (max-width: 991px) {
+.card-registration-2 .bg-grey {
+border-bottom-left-radius: 16px;
+border-bottom-right-radius: 16px;
+}
+}
+</style>
+<section class="h-100 ">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-8">
+                                <div class="p-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-5">
+                                        <h1 class="fw-bold mb-0 text-black">Your Cart</h1>
+                                        <h6 class="mb-0 text-muted">@data.Count items</h6>
+                                    </div>
+                                    @foreach (ShoppingCart item in data)
+                                    {
+                                <form action="" method="post">
+                                    <hr class="my-4">
+                                    <input type="hidden" name="seq" value="@item.seq" />
+                                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                        <div class="col-md-2 col-lg-2 col-xl-2">
+                                            @if (System.IO.File.Exists(Server.MapPath(item.order_pic)))
+                                            {
+                                                <img src="@item.order_pic"
+                                                     class="img-fluid rounded-3" alt="@item.order_name">
+                                            }
+                                            @if (item.order_status == 0)
+                                            {
+                                                <input type="checkbox" class="checkbox" name="status" onchange="this.form.submit();" />
+                                            }
+                                            @if (item.order_status == 1)
+                                            {
+                                                <input type="checkbox" class="checkbox" name="status" onchange="this.form.submit();" checked />
+                                            }
+                                            @item.order_price @item.currency_payment
+                                            @if (!item.currency_convert.Equals(item.currency_payment))
+                                            {
+                                                var total = item.exchangerate * item.order_price;
+                                                <span>(@total @item.currency_convert)</span>
+                                            }
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                            <h6 class="text-black mb-0">@item.order_name</h6>
+                                        </div>
+                                        <div class="col-md-3 col-lg-2 col-xl-2">
+                                            <input type="number" name="qty" value="@item.order_qty" onchange="this.form.submit();" />
+                                            @item.order_total @item.currency_convert
+                                        </div>
+                                        <div class="col-md-1 col-lg-2 col-xl-2 offset-lg-1">
+                                            <a href="@Url.Content("~/Cart/Delete")/@item.seq" class="btn btn-danger">Remove</a>
+                                        </div>
+                                    </div>
+                                </form>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-4 bg-grey">
+                                <div>
+                                    <h3 class="fw-bold mb-5 mt-2 pt-1">@ViewBag.User</h3>
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <h5 class="text-uppercase">items @data.Count</h5>
+                                        <h5>THB @data.Sum(e => e.order_total)</h5>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <button class="btn btn-success" onclick="window.location.href='@Url.Content("~")Catalog';">Back to Catalog</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="fw-bold mb-5 mt-2 pt-1">Checkout</h3>
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <h5 class="text-uppercase">items @data.Where(e => e.order_status.Equals(1)).ToList().Count</h5>
+                                        <h5>THB @data.Where(e => e.order_status.Equals(1)).Sum(e => e.order_total)</h5>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <button class="btn btn-primary" onclick="window.location.href='@Url.Content("~")cart/checkout';">Proceed to Checkout</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@result.error

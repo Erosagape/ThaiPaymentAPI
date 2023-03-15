@@ -255,11 +255,11 @@ namespace ThaiPaymentAPI.Controllers
             var group = Request.QueryString["group"];
             if (group != null)
             {
-                ViewBag.DataSource = new OrderDetail().Gets().Where(e => e.isactive.Equals(true) && e.order_group.Equals(group)).ToList();
+                ViewBag.DataSource = new OrderDetail().Gets().Where(e => e.order_group.Equals(group)).ToList();
             }
             else
             {
-                ViewBag.DataSource = new OrderDetail().Gets().Where(e => e.isactive.Equals(true)).ToList();
+                ViewBag.DataSource = new OrderDetail().Gets().ToList();
             };
             if (TempData["Message"] != null)
             {
@@ -283,7 +283,7 @@ namespace ThaiPaymentAPI.Controllers
             {
                 mdl = new OrderDetail().Gets().Where(e => e.order_id.Equals(id)).FirstOrDefault();
             }
-            ViewBag.GroupData = new OrderGroup().Gets();
+            ViewBag.GroupData = new OrderGroup().Gets().ToList();
             var curr = new SystemConfig().Gets().Where(
                 e => e.ConfigCode.Equals("DEFAULT")
                 && e.ConfigKey.Equals("ORDER_CURRENCY")
@@ -302,13 +302,20 @@ namespace ThaiPaymentAPI.Controllers
         [ActionName("Edit")]
         public ActionResult PostEdit(FormCollection form)
         {
+            var file=Request.Files["order_pic"];
+            string fname = "";
+            if (file.FileName!="")
+            {
+                fname = "/images/" + file.FileName;
+                file.SaveAs(Server.MapPath(fname));                
+            }
             var data = new OrderDetail()
             {
                 order_id=form["order_id"],
                 order_name=form["order_name"],
                 order_desc=form["order_desc"],
                 order_group=form["order_group"],
-                order_pic=form["order_pic"],
+                order_pic=fname,
                 currency=form["currency"],
                 order_actual=Convert.ToDouble(form["order_actual"]),
                 order_target=Convert.ToDouble(form["order_target"]),
@@ -320,7 +327,7 @@ namespace ThaiPaymentAPI.Controllers
         }
         public ActionResult Create()
         {
-            ViewBag.GroupData = new OrderGroup().Gets();
+            ViewBag.GroupData = new OrderGroup().Gets().Where(e=>e.isactive.Equals(true)).ToList();
             var curr = new SystemConfig().Gets().Where(
                 e => e.ConfigCode.Equals("DEFAULT")
                 && e.ConfigKey.Equals("ORDER_CURRENCY")
@@ -335,9 +342,59 @@ namespace ThaiPaymentAPI.Controllers
             }
             return View();
         }
-        public ActionResult Payment()
+        public ActionResult Payment(string id)
         {
-            return View();
+            if (id!="")
+            {                                
+                var data = new OrderDetail().Gets().Where(e => e.order_id.Equals(id)).FirstOrDefault();
+                int qty = 1;
+                if (Request.QueryString["qty"] != null)
+                {
+                    qty = Convert.ToInt32(Request.QueryString["qty"]);
+                }
+                double rate = Convert.ToInt32(new Models.SystemConfig() { ConfigCode = "DEFAULT", ConfigKey = "RATE_" + data.currency }.GetValue("1"));
+                if (Request.QueryString["rate"] != null)
+                {
+                    rate = Convert.ToDouble(Request.QueryString["rate"]);
+                }
+                var user = "Guest";
+                if (TempData["UserLogin"] != null)
+                {
+                    user = (string)TempData["UserLogin"];
+                }
+                var carts = new ShoppingCart().Gets(Request.UserHostAddress,user,Request.UserAgent,true);
+                var cart = new List<ShoppingCart>();
+                if (data.order_id.Equals(id))
+                {
+                    var prd = new ShoppingCart()
+                    {
+                        from_browser = Request.UserAgent,
+                        from_ip = Request.UserHostAddress,
+                        from_user = user,
+                        seq = (carts.ToList().Count > 0 ? carts.Max(e => e.seq) + 1 : 1),
+                        order_id = data.order_id,
+                        order_price = data.order_amount,
+                        order_qty = qty,
+                        currency_payment = data.currency,
+                        currency_convert = "THB",
+                        exchangerate = rate,
+                        order_amount = data.order_amount * qty,
+                        order_date = DateTime.Now,
+                        order_status = 1,
+                        order_total = data.order_amount * qty * rate,
+                        payment_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue,
+                        payment_no = "",
+                        receipt_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue,
+                        receipt_no = ""
+                    };
+                    var result = prd.Save(prd.from_ip, prd.from_user, prd.from_browser);
+                    if (result.success)
+                        cart.Add(prd);
+                    TempData["CurrentCart"] = cart;
+                    TempData["Message"] = result;
+                }
+            }
+            return RedirectToAction("Checkout","Cart");
         }
     }
 }

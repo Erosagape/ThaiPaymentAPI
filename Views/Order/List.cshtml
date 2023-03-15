@@ -13,6 +13,7 @@
             <th>Group</th>
             <th>Target Sales</th>
             <th>Actual Sales</th>
+            <th>Active</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -21,15 +22,16 @@
             <tbody>
                 @foreach (OrderDetail data in products)
                 {
-                    <tr>
-                        <td>@data.order_name</td>
-                        <td>@data.order_group</td>
-                        <td>@data.order_target</td>
-                        <td>@data.order_actual</td>
-                        <td>
-                            <a href="@Url.Content("~/Order/Edit")?id=@data.order_id" class="btn btn-primary">Edit</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@data.order_name</td>
+                    <td>@data.order_group</td>
+                    <td>@data.order_target</td>
+                    <td>@data.order_actual</td>
+                    <td>@data.isactive</td>
+                    <td>
+                        <a href="@Url.Content("~/Order/Edit")?id=@data.order_id" class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         }

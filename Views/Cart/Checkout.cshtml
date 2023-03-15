@@ -1,0 +1,75 @@
+﻿@using ThaiPaymentAPI.Models;
+@{
+    ViewBag.Title = "Checkout";
+    var data = (List<ShoppingCart>)Model;
+    var desc = "";
+    var i = 0;
+    var po = "PO" + DateTime.Now.ToString("yyyyMMddHHMMss");
+    foreach (ShoppingCart item in data)
+    {
+        if (i > 0)
+        {
+            desc += ",";
+        }
+        desc += item.order_name + "x" + item.order_qty +" ("+item.order_id +")=" + item.order_total + " " + item.currency_convert;
+        i++;
+    }
+}
+<h2>Checkout</h2>
+<form method="POST" action="@Url.Action("Test","Order")">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Order ID</label>
+            </div>
+            <div class="col-sm-6">
+                @po
+                <input type="hidden" name="orderId" value="@po" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Summary</label>
+            </div>
+            <div class="col-sm-6">
+                @Html.Raw(desc.Replace(",","<br>"))
+                <input type="hidden" name="orderDesc" value="@desc" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Payment Amount</label>
+            </div>
+            <div class="col-sm-6">
+                @data.Sum(e => e.order_total) THB
+                <input type="hidden" name="amount" value="@data.Sum(e=>e.order_total)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Your Language</label>
+            </div>
+            <div class="col-sm-6">
+                <select class="form-control dropdown" name="lang">
+                    @{
+                        foreach (var elm in INETConstants.Language)
+                        {
+                            switch (elm)
+                            {
+                                case "E":
+                                    <option value="E">English</option>
+                                    break;
+                                case "T":
+                                    <option value="T">Thai</option>
+                                    break;
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="currCode" value="THB" />
+    <input type="hidden" name="payType" value="CC" />
+    <input type="submit" class="btn btn-success" value="Place Order" />
+</form>
