@@ -10,5 +10,15 @@ namespace ThaiPaymentAPI.Models
         public bool success { get; set; }
         public string error { get; set; }
         public string data { get; set; }
+        public ErrorResponse()
+        {
+            error = "OK";
+        }
+        public ErrorResponse(bool sc,string er,string dt)
+        {
+            success = sc;
+            error = er;
+            data = dt;
+        }
     }
 }

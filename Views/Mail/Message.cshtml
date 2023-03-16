@@ -1,0 +1,43 @@
+﻿@using ThaiPaymentAPI.Models;
+@{
+    ViewBag.Title = "Get A Quote";
+    var result = (ErrorResponse)ViewBag.Message;
+}
+<h2>Get A Quote</h2>
+<form action="" method="post">
+    <input type="hidden" name="msg_to" value="@ViewBag.EmailTo" />
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Subject</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="msg_subject" value="" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Your Story To Us</label>
+        </div>
+        <div class="col-sm-6">
+            <textarea class="form-control" name="msg_body"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Your Email Address</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="msg_from" value="" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Your Mobile/Contact</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="msg_contact" value="" class="form-control" />
+        </div>
+    </div>
+    <input type="submit" value="Sent Message" class="btn btn-success" />
+</form>
+@result.error

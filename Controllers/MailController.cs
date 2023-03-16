@@ -71,5 +71,30 @@ namespace ThaiPaymentAPI.Controllers
             TempData["Message"] = (res.success? res.data:res.error);
             return RedirectToAction("Test");
         }
+        public ActionResult Message()
+        {
+            ViewBag.Message = new ErrorResponse(true, "Ready", "");
+            ViewBag.EmailTo = new SystemConfig() { ConfigCode = "CONFIG_EMAIL", ConfigKey = "EMAIL_ADMIN" }.GetValue();
+            if (TempData["Message"] != null)
+                ViewBag.Message = (ErrorResponse)TempData["Message"];
+            return View();
+        }
+        [HttpPost]
+        [ActionName("Message")]
+        public ActionResult PostMessage(FormCollection form)
+        {
+            var msg = EMailHelper.GetNewEMail();
+            msg.fromEmail = "admin@aih-consultant.com";
+            msg.fromPerson = form["msg_from"];
+            msg.toEmail = form["msg_to"];
+            msg.toPerson = form["msg_to"];
+            msg.body = form["msg_body"] + "<br>" + "Contact: " + form["msg_contact"];
+            msg.subject = form["msg_subject"];
+
+            var res = EMailHelper.SentEMail(msg);
+
+            TempData["Message"] = res;
+            return RedirectToAction("Message");
+        }
     }
 }
