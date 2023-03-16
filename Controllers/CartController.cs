@@ -51,13 +51,12 @@ namespace ThaiPaymentAPI.Controllers
             var cart = GetCurrentCart();            
             return View(cart);
         }
-        public ActionResult Add()
+        public ActionResult Add(string id)
         {
             LoadTempData();
             var cart = GetCurrentCart(true);
-            if (Request.QueryString["id"] != null)
+            if (id!= "")
             {
-                string id = Request.QueryString["id"];
                 var data = new OrderDetail().Gets().Where(e => e.order_id.Equals(id)).FirstOrDefault();
                 int qty = 1;
                 if (Request.QueryString["qty"] != null)
@@ -122,6 +121,10 @@ namespace ThaiPaymentAPI.Controllers
                 error = "Ready"
             };
             ViewBag.Message = result;
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = (ErrorResponse)TempData["Message"];
+            }
             TempData["Message"] = ViewBag.Message;
             return View(cart);
         }

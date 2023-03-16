@@ -344,9 +344,17 @@ namespace ThaiPaymentAPI.Controllers
         }
         public ActionResult Payment(string id)
         {
+            var ip = Request.UserHostAddress;
+            if (ip.Equals("::1"))
+                ip = "127.0.0.1";
             if (id!="")
             {                                
                 var data = new OrderDetail().Gets().Where(e => e.order_id.Equals(id)).FirstOrDefault();
+                if (!data.order_id.Equals(id))
+                {
+                    TempData["Message"] = new ErrorResponse(false, "Order Not Found", id);
+                    return RedirectToAction("Checkout", "Cart");
+                }
                 int qty = 1;
                 if (Request.QueryString["qty"] != null)
                 {
@@ -362,37 +370,34 @@ namespace ThaiPaymentAPI.Controllers
                 {
                     user = (string)TempData["UserLogin"];
                 }
-                var carts = new ShoppingCart().Gets(Request.UserHostAddress,user,Request.UserAgent,true);
+                var carts = new ShoppingCart().Gets(ip,user,Request.UserAgent,true);
                 var cart = new List<ShoppingCart>();
-                if (data.order_id.Equals(id))
+                var prd = new ShoppingCart()
                 {
-                    var prd = new ShoppingCart()
-                    {
-                        from_browser = Request.UserAgent,
-                        from_ip = Request.UserHostAddress,
-                        from_user = user,
-                        seq = (carts.ToList().Count > 0 ? carts.Max(e => e.seq) + 1 : 1),
-                        order_id = data.order_id,
-                        order_price = data.order_amount,
-                        order_qty = qty,
-                        currency_payment = data.currency,
-                        currency_convert = "THB",
-                        exchangerate = rate,
-                        order_amount = data.order_amount * qty,
-                        order_date = DateTime.Now,
-                        order_status = 1,
-                        order_total = data.order_amount * qty * rate,
-                        payment_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue,
-                        payment_no = "",
-                        receipt_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue,
-                        receipt_no = ""
-                    };
-                    var result = prd.Save(prd.from_ip, prd.from_user, prd.from_browser);
-                    if (result.success)
-                        cart.Add(prd);
-                    TempData["CurrentCart"] = cart;
-                    TempData["Message"] = result;
-                }
+                    from_browser = Request.UserAgent,
+                    from_ip = ip,
+                    from_user = user,
+                    seq = (carts.ToList().Count > 0 ? carts.Max(e => e.seq) + 1 : 1),
+                    order_id = data.order_id,
+                    order_price = data.order_amount,
+                    order_qty = qty,
+                    currency_payment = data.currency,
+                    currency_convert = "THB",
+                    exchangerate = rate,
+                    order_amount = data.order_amount * qty,
+                    order_date = DateTime.Now,
+                    order_status = 1,
+                    order_total = data.order_amount * qty * rate,
+                    payment_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue,
+                    payment_no = "",
+                    receipt_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue,
+                    receipt_no = ""
+                };
+                var result = prd.Save(prd.from_ip, prd.from_user, prd.from_browser);
+                if (result.success)
+                    cart.Add(prd);
+                TempData["CurrentCart"] = cart;
+                TempData["Message"] = result;
             }
             return RedirectToAction("Checkout","Cart");
         }
