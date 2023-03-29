@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "View";
+}
+<h2>Test 2C2P Payment</h2>
+<form method="post" action="@Url.Action("PostPaymentUAT","Test2C2P")">
+    <div class="row">
+        <div class="col-sm-4">
+            Order No
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="invoiceNo" class="form-control" value="AIHDN-@DateTime.Now.ToString("yyMMHHss")" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            Description
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="description" class="form-control" value="Test Item" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            Amount
+        </div>
+        <div class="col-sm-6">
+            <input type="number" name="amount" class="form-control" value="5000" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            Currency
+        </div>
+        <div class="col-sm-6">
+            <input type="text" name="currencyCode" value="USD" class="form-control" />
+        </div>
+    </div>
+<input type="submit" value="submit" class="btn btn-success" />
+</form>
+@ViewBag.Result
