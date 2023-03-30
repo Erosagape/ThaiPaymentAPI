@@ -17,6 +17,7 @@ namespace ThaiPaymentAPI.Models
         public string log_message { get; set; }
         public string log_stacktrace { get; set; }
         public bool log_error { get; set; }
+        public DateTime log_datetime { get; set; }
         public IEnumerable<ActionLog> Gets()
         {
             using(SqlConnection cn=new SqlConnection(ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString))
@@ -37,8 +38,8 @@ BEGIN TRY
     
     DECLARE @AUTO_ID as int
     
-    INSERT INTO dbo.ActionLog (log_source,log_action,log_data,log_message,log_stacktrace,log_error) 
-    VALUES(@source,@action,@data,@message,@stacktrace,@err)
+    INSERT INTO dbo.ActionLog (log_source,log_action,log_data,log_message,log_stacktrace,log_error,log_datetime) 
+    VALUES(@source,@action,@data,@message,@stacktrace,@err,GETDATE())
     
     SET @AUTO_ID=SCOPE_IDENTITY()
 

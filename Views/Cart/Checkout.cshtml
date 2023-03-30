@@ -16,7 +16,7 @@
     }
 }
 <h2>Checkout</h2>
-<form method="POST" action="@Url.Action("Test","Order")">
+<form method="POST" action="@Url.Action("PostOrderPaymentUAT","Test2C2P")">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-2">
@@ -32,8 +32,18 @@
                 <label>Summary</label>
             </div>
             <div class="col-sm-6">
-                @Html.Raw(desc.Replace(",","<br>"))
+                @Html.Raw(desc.Replace(",", "<br>"))
                 <input type="hidden" name="orderDesc" value="@desc" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Currency</label>
+            </div>
+
+            <div class="col-sm-6">
+                @data.Sum(e => e.order_amount) @data.Max(e => e.currency_payment)
+                <input type="hidden" name="currCode" value="@data.Max(e=>e.currency_payment)" />
             </div>
         </div>
         <div class="row">
@@ -41,11 +51,11 @@
                 <label>Payment Amount</label>
             </div>
             <div class="col-sm-6">
-                @data.Sum(e => e.order_total) THB
-                <input type="hidden" name="amount" value="@data.Sum(e=>e.order_total)" />
+                @data.Sum(e => e.order_total) @data.Max(e => e.currency_convert)
+                <input type="hidden" name="amount" value="@data.Sum(e=>e.order_amount)" />
             </div>
         </div>
-        <div class="row">
+        @*        <div class="row">
             <div class="col-sm-2">
                 <label>Your Language</label>
             </div>
@@ -67,9 +77,9 @@
                     }
                 </select>
             </div>
-        </div>
+        </div>*@
     </div>
-    <input type="hidden" name="currCode" value="764" />
+    @*<input type="hidden" name="currCode" value="764" />*@
     <input type="hidden" name="payType" value="CC" />
     <input type="submit" class="btn btn-success" value="Place Order" />
 </form>

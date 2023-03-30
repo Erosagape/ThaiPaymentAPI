@@ -332,6 +332,7 @@
     <Content Include="Views\Test2C2P\Index.cshtml" />
     <Content Include="Views\Test2C2P\Result.cshtml" />
     <Content Include="Views\Test2C2P\Index2.cshtml" />
+    <Content Include="Views\Test2C2P\Decode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
