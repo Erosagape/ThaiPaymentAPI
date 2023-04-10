@@ -14,6 +14,7 @@
             @foreach (OrderDetail row in data.Where(e => e.order_group.Equals(group.order_group)))
             {
                 i += 1;
+		var total=row.order_amount*(int)ViewBag.ExchangeRate;
             <div class="col-md-4">
                 <div class="choose_box">
                     <div class="number_1">
@@ -30,9 +31,7 @@
                         @row.order_desc
                     </p>
                     <p class="dummy_text">
-                        <b>Donate Price : </b> <u>@row.order_amount @row.currency</u>
-                        <br />
-                        <b>Current Donation </b> <span>@row.order_actual</span> <b>Target Donation</b> <span> @row.order_target</span> @row.currency
+                        <b>Price : </b> <u>@total THB</u>
                     </p>
                     <p class="dummy_text">
                         <button class="btn btn-primary" onclick="window.location.href='@Url.Content("~")order/payment/@row.order_id';">Payment Now</button>

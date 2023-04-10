@@ -43,7 +43,7 @@
 
             <div class="col-sm-6">
                 @data.Sum(e => e.order_amount) @data.Max(e => e.currency_payment)
-                <input type="hidden" name="currCode" value="@data.Max(e=>e.currency_payment)" />
+                <input type="hidden" name="currCode" value="THB" />
             </div>
         </div>
         <div class="row">
@@ -52,7 +52,7 @@
             </div>
             <div class="col-sm-6">
                 @data.Sum(e => e.order_total) @data.Max(e => e.currency_convert)
-                <input type="hidden" name="amount" value="@data.Sum(e=>e.order_amount)" />
+                <input type="hidden" name="amount" value="@data.Sum(e=>e.order_total)" />
             </div>
         </div>
         @*        <div class="row">
