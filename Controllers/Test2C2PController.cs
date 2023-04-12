@@ -33,7 +33,7 @@ namespace ThaiPaymentAPI.Controllers
         {
             var payload = new Dictionary<string, object>()
             {
-                {"merchantID", _2C2PConstant.PRDMerchantID},
+                {"merchantID", _2C2PConstant.UATMerchantID},
                 {"invoiceNo", data["orderId"]},
                 {"description", data["orderDesc"]},
                 {"amount", data["amount"]},
@@ -41,7 +41,7 @@ namespace ThaiPaymentAPI.Controllers
                 {"frontendReturnUrl","https://www.aih-consultant.com/backend/test2c2p/result" },
                 {"backendReturnUrl","https://www.aih-consultant.com/backend/test2c2p/PostResult" },
             };
-            string secretkey = _2C2PConstant.PRDSecretID;
+            string secretkey = _2C2PConstant.UATSecretID;
             var algorithm = new HMACSHA256Algorithm();
             var serializer = new JsonNetSerializer();
             var urlEncoder = new JwtBase64UrlEncoder();

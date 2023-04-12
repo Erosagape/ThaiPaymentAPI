@@ -112,8 +112,8 @@ namespace ThaiPaymentAPI.Controllers
         {
             LoadTempData();
             var cart = TempData["CurrentCart"];
-            if(cart==null)
-                cart = GetCurrentCart().Where(e=>e.order_status.Equals(1)).ToList();
+            if (cart == null)
+                cart = GetCurrentCart().Where(e => e.order_status.Equals(1)).ToList();
             var result = new ErrorResponse()
             {
                 success = true,
@@ -128,6 +128,7 @@ namespace ThaiPaymentAPI.Controllers
             TempData["Message"] = ViewBag.Message;
             return View(cart);
         }
+
         [HttpPost]
         [ActionName("Index")]
         public ActionResult Edit(FormCollection form)

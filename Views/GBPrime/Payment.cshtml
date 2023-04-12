@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+    var publickey = ThaiPaymentAPI.Models.GBPConstants.UATPublicKey;
+    var paytype = ViewBag.PayType;
+    if (paytype == "prd")
+    {
+        publickey = ThaiPaymentAPI.Models.GBPConstants.PRDPublicKey;
+    }
+}
+<h2>Payment</h2>
+<form id="checkout-form" action="@Url.Action("Token","GBPrime")">
+    <div id="gb-form" style="height: 600px;"></div>
+</form>
+<script src="~/Scripts/GBPrimePay.js"></script>
+<script>
+    new GBPrimePay({
+        publicKey: '@publickey',
+        gbForm: '#gb-form',
+        merchantForm: '#checkout-form',
+        amount: @ViewBag.TotalAmount,
+        customStyle: {
+            backgroundColor: '#eaeaea'
+        },
+        env: '@ViewBag.PayType'
+    });
+</script>
+
+

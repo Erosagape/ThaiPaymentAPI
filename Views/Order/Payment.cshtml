@@ -1,7 +1,68 @@
-﻿@{
-    Layout = "~/Views/Shared/MasterPage.cshtml";
-    ViewBag.Title = "Payment";
+﻿@using ThaiPaymentAPI.Models;
+@{
+    ViewBag.Title = "Checkout";
 }
 <h2>Payment</h2>
-Hello There!
+<form method="POST" action="@Url.Action("PostOrderPaymentPRD","Test2C2P")">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Order ID</label>
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="orderId" value="" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Description</label>
+            </div>
+            <div class="col-sm-6">                
+                <input type="text" name="orderDesc" value="" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Currency</label>
+            </div>
 
+            <div class="col-sm-6">
+                <input type="text" name="currCode" value="THB" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Payment Amount</label>
+            </div>
+            <div class="col-sm-6">
+                <input type="number" name="amount"  />
+            </div>
+        </div>
+        @*        <div class="row">
+                <div class="col-sm-2">
+                    <label>Your Language</label>
+                </div>
+                <div class="col-sm-6">
+                    <select class="form-control dropdown" name="lang">
+                        @{
+                            foreach (var elm in INETConstants.Language)
+                            {
+                                switch (elm)
+                                {
+                                    case "E":
+                                        <option value="E">English</option>
+                                        break;
+                                    case "T":
+                                        <option value="T">Thai</option>
+                                        break;
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>*@
+    </div>
+    @*<input type="hidden" name="currCode" value="764" />*@
+    <input type="text" name="payType" value="CC" />
+    <input type="submit" class="btn btn-success" value="Confirm" />
+</form>

@@ -185,6 +185,7 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\ConfigController.cs" />
+    <Compile Include="Controllers\GBPrimeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\EMailIHelper.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
+    <Compile Include="Models\GBPConstants.cs" />
     <Compile Include="Models\INETConstants.cs" />
     <Compile Include="Models\INETOrderPayment.cs" />
     <Compile Include="Models\INETOrderRequest.cs" />
@@ -268,6 +270,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.6.4.intellisense.js" />
+    <Content Include="Scripts\GBPrimePay.js" />
     <Content Include="Scripts\jquery-3.6.4.js" />
     <Content Include="Scripts\jquery-3.6.4.min.js" />
     <Content Include="Scripts\jquery-3.6.4.slim.js" />
@@ -333,6 +336,9 @@
     <Content Include="Views\Test2C2P\Result.cshtml" />
     <Content Include="Views\Test2C2P\Index2.cshtml" />
     <Content Include="Views\Test2C2P\Decode.cshtml" />
+    <Content Include="Views\GBPrime\Index.cshtml" />
+    <Content Include="Views\GBPrime\Payment.cshtml" />
+    <Content Include="Views\GBPrime\Token.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

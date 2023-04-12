@@ -29,6 +29,10 @@ namespace ThaiPaymentAPI.Controllers
             var obj = (INETOrderResponse)TempData["payment"];
             return View(obj);
         }
+        public ActionResult Test2C2P()
+        {
+            return View("Payment");
+        }
         [HttpPost]
         [ActionName("Test")]
         public ActionResult PostTest()
