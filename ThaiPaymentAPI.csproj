@@ -339,6 +339,8 @@
     <Content Include="Views\GBPrime\Index.cshtml" />
     <Content Include="Views\GBPrime\Payment.cshtml" />
     <Content Include="Views\GBPrime\Token.cshtml" />
+    <Content Include="Views\GBPrime\Result.cshtml" />
+    <Content Include="Views\GBPrime\CardPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

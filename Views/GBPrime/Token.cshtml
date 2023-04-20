@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Token";
+}
+
+<h2>Token</h2>
+Value = @ViewBag.GBPToken
+<br />
+Order# = @ViewBag.OrderNo
+<br/>
+Amount = @ViewBag.OrderAmount
+<br/>
+Trans Type = @ViewBag.TransType 
+<br />
+Remember Card = @ViewBag.RememberCard
+<form method="post" action="">
+    <input type="hidden" name="token" value="@ViewBag.GBPToken" />
+    <input type="hidden" name="orderNo" value="@ViewBag.OrderNo" />
+    <input type="hidden" name="orderAmount" value="@ViewBag.OrderAmount" />
+    <input type="hidden" name="transType" value="@ViewBag.TransType" />
+    <input type="hidden" name="rememberCard" value="@ViewBag.RememberCard" />
+    <input type="submit" class="btn btn-success" value="Submit" />
+</form>

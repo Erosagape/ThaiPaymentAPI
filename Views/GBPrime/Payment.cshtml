@@ -8,8 +8,11 @@
         publickey = ThaiPaymentAPI.Models.GBPConstants.PRDPublicKey;
     }
 }
-<h2>Payment</h2>
 <form id="checkout-form" action="@Url.Action("Token","GBPrime")">
+    <b>Summary</b><br />
+    Order No <input type="text" name="orderNo" value="@DateTime.Now.ToString("yyyyMMddHHMMss")" readonly /><br />
+    Order Amount <input type="number" name="orderAmount" value="@ViewBag.TotalAmount" readonly />
+    <input type="hidden" value="@ViewBag.PayType" name="transType" />
     <div id="gb-form" style="height: 600px;"></div>
 </form>
 <script src="~/Scripts/GBPrimePay.js"></script>

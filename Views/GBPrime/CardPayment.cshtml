@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+}
+
+<h2>Payment Confirmation</h2>
+<form action="" method="post">
+    <div class="container">
+        <b>Order Information</b>
+        <div class="row">
+            <div class="col-sm-4">
+                Order No
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="orderNo" value="@ViewBag.OrderNo" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                Order Description
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="orderDetail" value="@ViewBag.OrderDetail" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                Order Amount
+            </div>
+            <div class="col-sm-6">
+                <input type="number" name="orderAmt" value="@ViewBag.OrderAmt" />
+            </div>
+        </div>
+        <b>Your Information</b>
+        <div class="row">
+            <div class="col-sm-4">
+                Your Name
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="customerName" value="@ViewBag.CustomerName" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                Your Address
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="customerAddress" value="@ViewBag.CustomerAddress" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                Your E-Mail
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="customerEmail" value="@ViewBag.CustomerEmail" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                Your Phone
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="customerTelephone" value="@ViewBag.CustomerPhone" />
+            </div>
+        </div>
+        <b>Credit Card Information</b>
+        <div class="row">
+            <div class="col-sm-4">
+                Card Number
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="cardNumber" value="" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                Card Expiration
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="expireMonth" value="xx" />/<input type="text" name="expireYear" value="XX" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                CVV
+            </div>
+            <div class="col-sm-6">
+                <input type="password" name="secureCode" value="" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                Type
+            </div>
+            <div class="col-sm-6">
+                <select name="payType">
+                    <option value="UAT">Test</option>
+                    <option value="PRD">Real</option>
+                </select>
+            </div>
+        </div>
+        <input type="submit" value="Proceed" class="btn btn-success" />
+    </div>
+</form>
+@ViewBag.Result
+
